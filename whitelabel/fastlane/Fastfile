@@ -12,7 +12,7 @@ platform :android do
       tasks:["clean", "assembleRelease", "bundleRelease"],
       flags: "-x lint -x lintVitalRelease --stacktrace",
       print_command: true,
-      project_dir: './android/'
+      project_dir: '../android/'
     )
   end
 
