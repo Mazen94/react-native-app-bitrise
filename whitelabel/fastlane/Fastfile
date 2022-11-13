@@ -15,14 +15,14 @@ platform :android do
       project_dir: '../android/'
     )
 
-    output_file = "/Users/vagrant/deploy/";
+    output_file = ENV['BITRISE_DEPLOY_DIR'];
 
     APK_LOCATION = "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
     ABB_LOCATION = "#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}"
       
     sh("mv #{APK_LOCATION} #{output_file}")
     sh("mv #{ABB_LOCATION} #{output_file}")
-    
+
   end
 
   desc 'Ship to Playstore Beta.'
