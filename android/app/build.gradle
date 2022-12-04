@@ -79,6 +79,8 @@ import org.apache.tools.ant.taskdefs.condition.Os
  */
 
 project.ext.react = [
+    entryFile: "index.js",
+    bundleAssetName: "app.bundle",
     enableHermes: true,  // clean and rebuild if changing
 ]
 
@@ -245,7 +247,10 @@ android {
             }
 
         }
-    }
+    }   
+  packagingOptions {
+    exclude 'META-INF/react-native-webview_release.kotlin_module'
+    }  
 }
 
 dependencies {
@@ -264,11 +269,22 @@ dependencies {
         exclude group:'com.facebook.flipper'
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
-
+    implementation(project(':react-native-jitsi-meet')) {
+        exclude group: 'com.facebook.react', module:'react-native-vector-icons'
+        exclude group: 'com.facebook.react', module:'react-native-webview'
+        exclude group: 'com.facebook.react', module:'react-native-youtube'
+        exclude group: 'com.facebook.react', module:'react-native-community-async-storage'
+        // exclude group: 'com.facebook.react', module:'react-native-linear-gradient'
+        exclude group: 'com.facebook.react', module:'react-native-background-timer'
+        exclude group: 'com.facebook', module:'hermes'
+        transitive = true
+    }
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
-
+    debugImplementation(project(':react-native-jitsi-meet')) {
+        exclude group: 'com.facebook',module:'hermes'
+    }
     if (enableHermes) {
         //noinspection GradleDynamicVersion
         implementation("com.facebook.react:hermes-engine:+") { // From node_modules
